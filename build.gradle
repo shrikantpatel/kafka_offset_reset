@@ -4,16 +4,11 @@ buildscript {
 	}
     repositories {
 		mavenLocal()
-	   	maven { url "http://artifactory:8081/artifactory/repo1" }
 	   	mavenCentral()
 	}
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
-}
-
-plugins {
-  id "com.commercehub.gradle.plugin.avro" version "0.8.0"
 }
 
 apply plugin: 'java'
@@ -29,7 +24,6 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 ext {
-    avroVersion = '1.8.1'
     junitVersion = '4.12'
     kafkaVersion = '0.10.1.1'
     scalaVersion = '2.11'
@@ -39,42 +33,21 @@ ext {
     assertjVersion = '2.4.1'
     commonsLangVersion = '3.4'
     zookeeperVersion='3.4.6'
-    aemVersion='1.0.29'
-    pdxSecVersion='1.0.38'
 }
 
 springBoot {
     executable = true
-    mainClass = 'com.pdxinc.subscriber.SubscriberApplication'
-}
-
-jar {
-    baseName = 'spring-boot-subscriber'
-    version =  '1.0.0'
+    mainClass = 'com.shri.OffsetResetKafkaApp'
 }
 
 repositories {
 	mavenLocal()
-   	maven { url "http://artifactory:8081/artifactory/repo" }
    	mavenCentral()
-   	maven { url "http://artifactory:8081/artifactory/libs-release-local"}
 }
-
-avro {
-    stringType = "charSequence"
-}
-
-task generateAvro(type: com.commercehub.gradle.plugin.avro.GenerateAvroJavaTask) {
-    source("src/main/resources/avro_1")
-    outputDir = file("src/main/avro")
-}
-
-compileJava.source(generateAvro.outputs)
 
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
-    compile "org.apache.avro:avro:$avroVersion"
     compile "org.apache.kafka:kafka-clients:$kafkaVersion"
     compile "org.apache.kafka:kafka-streams:$kafkaVersion"
     compile "org.springframework:spring-core"
@@ -82,9 +55,6 @@ dependencies {
     compile "org.springframework:spring-context"
     compile "org.apache.commons:commons-lang3:$commonsLangVersion"
  	compile "org.springframework.kafka:spring-kafka:$springKafka"
- 	compile "com.rx:rxcom-aem:$aemVersion"
- 	compile files('lib/snowflake_jdbc.jar')
- 	compile 'com.pdxinc.sec:pdxsec:1.0.38'
  	compile("org.springframework.boot:spring-boot-starter-actuator")
  	
  	testCompile "org.springframework.boot:spring-boot-starter-test"
@@ -94,9 +64,6 @@ dependencies {
     testCompile "org.springframework.kafka:spring-kafka-test:$springKafka"
     testCompile "org.assertj:assertj-core:$assertjVersion"
     testCompile "org.springframework:spring-tx"
-	testCompile "com.rx:rxcom-aem:$aemVersion"
-	testCompile files('lib/snowflake_jdbc.jar')
-	testCompile 'com.pdxinc.sec:pdxsec:1.0.38'
 }
 
 task wrapper(type: Wrapper) {
