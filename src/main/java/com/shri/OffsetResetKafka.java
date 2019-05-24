@@ -108,6 +108,9 @@ public class OffsetResetKafka {
             consumer.seek(topicPartition, offset_value);
             consumer.commitSync();
         }
+
+        logger.info("The offset change committed, please run the consumer group lap command to check the lag offsets");
+
     }
 
 }
