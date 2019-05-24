@@ -26,9 +26,6 @@ public class OffsetResetKafka {
     @Value("${topic}")
     private String topic;
 
-    @Value("${concurrent_thread}")
-    private int concurrent_thread;
-
     @Value("${bootstrap_server}")
     private String bootstrap_server;
 
@@ -62,6 +59,12 @@ public class OffsetResetKafka {
     @Value("${consumer_group}")
     private String consumer_group;
 
+    @Value ("${partition_number}")
+    private int partition_number;
+
+    @Value ("${offset_value}")
+    private int offset_value;
+
     public void setOffset() {
 
         Map<String, Object> consumerProps = new HashMap<String, Object>();
@@ -94,9 +97,15 @@ public class OffsetResetKafka {
         consumer.subscribe(Arrays.asList(topic));
         ConsumerRecords<String, String> records = consumer.poll(100);
 
-        for (int i = 0; i < partitionCount; i++) {
-            TopicPartition topicPartition = new TopicPartition(topic, 0);
-            consumer.seek(topicPartition, 0);
+        if (partition_number == -1) {
+            for (int i = 0; i < partitionCount; i++) {
+                TopicPartition topicPartition = new TopicPartition(topic, i);
+                consumer.seek(topicPartition, offset_value);
+                consumer.commitSync();
+            }
+        } else {
+            TopicPartition topicPartition = new TopicPartition(topic, partition_number);
+            consumer.seek(topicPartition, offset_value);
             consumer.commitSync();
         }
     }
