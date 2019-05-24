@@ -26,43 +26,43 @@ public class OffsetResetKafka {
     @Value("${topic}")
     private String topic;
 
-    @Value("${bootstrap_server}")
+    @Value("${bootstrap.server}")
     private String bootstrap_server;
 
-    @Value("${security_protocol}")
+    @Value("${security.protocol}")
     private String security_protocol;
 
-    @Value("${ssl_truststore_location}")
+    @Value("${ssl.truststore.location}")
     private String ssl_truststore_location;
 
-    @Value("${ssl_truststore_password}")
+    @Value("${ssl.truststore.password}")
     private String ssl_truststore_password;
 
-    @Value("${ssl_keystore_location}")
+    @Value("${ssl.keystore.location}")
     private String ssl_keystore_location;
 
-    @Value("${ssl_keystore_password}")
+    @Value("${ssl.keystore.password}")
     private String ssl_keystore_password;
 
-    @Value("${ssl_key_password}")
+    @Value("${ssl.key.password}")
     private String ssl_key_password;
 
-    @Value("${ssl_enabled_protocols}")
+    @Value("${ssl.enabled.protocols}")
     private String ssl_enabled_protocols;
 
-    @Value("${ssl_truststore_type}")
+    @Value("${ssl.truststore.type}")
     private String ssl_truststore_type;
 
-    @Value("${ssl_keystore_type}")
+    @Value("${ssl.keystore.type}")
     private String ssl_keystore_type;
 
-    @Value("${consumer_group}")
+    @Value("${consumer.group}")
     private String consumer_group;
 
-    @Value ("${partition_number}")
+    @Value ("${partition.number}")
     private int partition_number;
 
-    @Value ("${offset_value}")
+    @Value ("${offset.value}")
     private int offset_value;
 
     public void setOffset() {

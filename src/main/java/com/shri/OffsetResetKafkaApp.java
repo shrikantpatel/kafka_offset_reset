@@ -10,6 +10,5 @@ public class OffsetResetKafkaApp {
     public static void main(String[] args) {
         ApplicationContext ctx = SpringApplication.run(OffsetResetKafkaApp.class, args);
         ctx.getBean(OffsetResetKafka.class).setOffset();
-
     }
 }
