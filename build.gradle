@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '1.5.3.RELEASE'
+		springBootVersion = '2.0.5.RELEASE'
 	}
     repositories {
 		mavenLocal()
@@ -15,6 +15,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 configurations.all {
     exclude group: 'org.slf4j', module: 'slf4j-log4j12'
@@ -24,20 +25,10 @@ sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 ext {
-    junitVersion = '4.12'
-    kafkaVersion = '0.10.1.1'
-    scalaVersion = '2.11'
-    springRetryVersion = '1.1.2.RELEASE'
-    springVersion = '4.2.5.RELEASE'
-    springKafka = '1.1.2.RELEASE'
-    assertjVersion = '2.4.1'
-    commonsLangVersion = '3.4'
-    zookeeperVersion='3.4.6'
 }
 
 springBoot {
-    executable = true
-    mainClass = 'com.shri.OffsetResetKafkaApp'
+    mainClassName = 'com.shri.OffsetResetKafkaApp'
 }
 
 repositories {
@@ -45,27 +36,31 @@ repositories {
    	mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
+    }
+}
+
 dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-actuator"
-    compile "org.apache.kafka:kafka-clients:$kafkaVersion"
-    compile "org.apache.kafka:kafka-streams:$kafkaVersion"
+    compile "org.apache.kafka:kafka-clients"
+    compile "org.apache.kafka:kafka-streams"
     compile "org.springframework:spring-core"
     compile "org.springframework:spring-beans"
     compile "org.springframework:spring-context"
-    compile "org.apache.commons:commons-lang3:$commonsLangVersion"
- 	compile "org.springframework.kafka:spring-kafka:$springKafka"
- 	compile("org.springframework.boot:spring-boot-starter-actuator")
- 	
- 	testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "junit:junit:$junitVersion"
+    compile "org.springframework.kafka:spring-kafka"
+
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "junit:junit"
     testCompile "org.springframework:spring-test"
-    testCompile "org.apache.zookeeper:zookeeper:$zookeeperVersion"
-    testCompile "org.springframework.kafka:spring-kafka-test:$springKafka"
-    testCompile "org.assertj:assertj-core:$assertjVersion"
+    testCompile "org.apache.zookeeper:zookeeper"
+    testCompile "org.springframework.kafka:spring-kafka-test"
+    testCompile "org.assertj:assertj-core"
     testCompile "org.springframework:spring-tx"
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.3'
+    gradleVersion = '4.3.1'
 }

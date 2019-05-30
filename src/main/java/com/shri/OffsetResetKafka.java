@@ -59,10 +59,10 @@ public class OffsetResetKafka {
     @Value("${consumer.group}")
     private String consumer_group;
 
-    @Value ("${partition.number}")
+    @Value("${partition.number}")
     private int partition_number;
 
-    @Value ("${offset.value}")
+    @Value("${offset.value}")
     private int offset_value;
 
     public void setOffset() {
@@ -109,7 +109,7 @@ public class OffsetResetKafka {
             consumer.commitSync();
         }
 
-        logger.info("The offset change committed, please run the consumer group lap command to check the lag offsets");
+        logger.info("**************The offset change committed, please run the consumer group lap command to check the lag offsets applied **************");
 
     }
 
